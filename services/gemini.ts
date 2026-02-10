@@ -6,7 +6,7 @@ export const generatePromptFromImage = async (
   modelType: PromptModel
 ): Promise<string> => {
   // Fix: Use mandatory initialization format for GoogleGenAI with named parameter and direct process.env.API_KEY
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GOOGLE_API_KEY });
 
   let promptInstruction = "";
 
