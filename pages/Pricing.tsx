@@ -1,3 +1,18 @@
+import { onMount } from 'svelte';
+
+onMount(() => {
+    // We add a small delay to give Paddle.js time to load
+    setTimeout(() => {
+        if (window.Paddle) {
+            window.Paddle.Setup({
+                token: 'live_02cff4433d43404f6c17693be17'
+            });
+        } else {
+            console.error("Paddle.js script did not load in time.");
+        }
+    }, 500); // 500 milliseconds delay
+});
+
 import React, { useState } from 'react';
 import { Check, Star, Infinity, Zap, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 
