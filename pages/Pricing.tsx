@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Check, Star, Infinity, Zap, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 
 declare global {
@@ -10,29 +10,13 @@ declare global {
 const Pricing: React.FC = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (window.Paddle) {
-      window.Paddle.Setup({
-        token: 'live_02cff4433d43404f6c17693be17'
-      });
-    } else {
-      document.addEventListener('paddle:ready', () => {
-        if (window.Paddle) {
-            window.Paddle.Setup({
-                token: 'live_02cff4433d43404f6c17693be17'
-            });
-        }
-      });
-    }
-  }, []);
-
   const handleCheckout = (priceId: string) => {
     if (window.Paddle) {
       window.Paddle.Checkout.open({
         items: [{ priceId: priceId, quantity: 1 }]
       });
     } else {
-      console.error("Paddle is not available or has not been set up yet.");
+      console.error("Paddle not loaded");
     }
   };
 
@@ -247,6 +231,7 @@ const Pricing: React.FC = () => {
         <h1 className="text-5xl font-black mb-4 text-charcoal dark:text-offwhite">Choose Your Power</h1>
         <p className="text-slate-600 dark:text-slate-400 text-lg">Flexible plans that grow with your creative journey.</p>
       </div>
+
       {/* Subscription Plans Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {subscriptionPlans.map((plan) => {
@@ -279,6 +264,7 @@ const Pricing: React.FC = () => {
                   {plan.description}
                 </p>
               </div>
+
               <ul className="space-y-4 mb-8 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
@@ -287,6 +273,7 @@ const Pricing: React.FC = () => {
                   </li>
                 ))}
               </ul>
+
               <button 
                 onClick={() => plan.priceId && handleCheckout(plan.priceId)}
                 className="purchase-button w-full"
@@ -297,6 +284,7 @@ const Pricing: React.FC = () => {
           );
         })}
       </div>
+
       {/* Lifetime Plan */}
       <div 
         className="rounded-[40px] p-8 md:p-12 mb-24 transition-all flex flex-col lg:flex-row items-center gap-12 shadow-2xl text-black border-2 border-yellow-400/20"
@@ -314,6 +302,7 @@ const Pricing: React.FC = () => {
             Forever access. No recurring fees.
           </p>
         </div>
+
         <div className="lg:w-1/2 flex-grow">
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4">
             {lifetimePlan.features.map((feature) => (
@@ -324,6 +313,7 @@ const Pricing: React.FC = () => {
             ))}
           </ul>
         </div>
+
         <div className="lg:w-1/4 w-full text-center">
           <button 
             onClick={() => handleCheckout(lifetimePlan.priceId)}
@@ -333,12 +323,14 @@ const Pricing: React.FC = () => {
           </button>
         </div>
       </div>
+
       {/* Credit Packs */}
       <section className="mb-24">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-black text-charcoal dark:text-offwhite mb-2">Credit Packs</h2>
           <p className="text-slate-600 dark:text-slate-400">One-time purchase for extra image generation credits.</p>
         </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {creditPacks.map((pack, idx) => (
             <div key={idx} className="bg-white dark:bg-charcoal-lighter border border-black/5 dark:border-white/5 rounded-[32px] p-8 flex flex-col hover:border-accent transition-all shadow-xl active:scale-[0.98]">
@@ -354,11 +346,13 @@ const Pricing: React.FC = () => {
                   </div>
                 </div>
               </div>
+
               <div className="mb-6 p-4 bg-slate-50 dark:bg-charcoal/50 rounded-2xl border border-black/5">
                 <p className="text-sm font-black text-accent flex items-center gap-2">
                    <Sparkles size={14} /> {pack.credits}
                 </p>
               </div>
+
               <ul className="space-y-4 mb-8 flex-1">
                 {pack.features.map((feature, fIdx) => (
                   <li key={fIdx} className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 font-medium">
@@ -367,6 +361,7 @@ const Pricing: React.FC = () => {
                   </li>
                 ))}
               </ul>
+
               <button 
                 onClick={() => handleCheckout(pack.priceId)}
                 className="purchase-button w-full"
@@ -377,12 +372,14 @@ const Pricing: React.FC = () => {
           ))}
         </div>
       </section>
+
       {/* FAQ Section */}
       <section className="mt-24 max-w-4xl mx-auto pb-16">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-black text-charcoal dark:text-offwhite mb-4 tracking-tight">Frequently asked questions</h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg font-medium">Do you have any questions? We have got you covered.</p>
         </div>
+
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div 
